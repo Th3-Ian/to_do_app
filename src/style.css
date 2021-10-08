@@ -8,6 +8,11 @@ header {
   justify-content: space-around;
 }
 
+h2 {
+  padding: 0;
+  margin: 0;
+}
+
 .list-nav {
   padding-top: 40px;
   margin: 0 auto;
@@ -124,4 +129,38 @@ header {
   padding: 0;
   background: none;
   cursor: pointer;
+}
+
+.left-col {
+  margin-left: 40px;
+  padding: 0;
+  border: 2px solid black;
+  border-radius: 15px;
+  width: 200px;
+}
+
+.side-list {
+  border-bottom: 3px solid rgb(119, 119, 119);
+  margin-bottom: 0;
+  padding: 10px 24px;
+}
+
+.side-list:last-child() {
+  border-bottom: none;
+}
+
+.movies {
+  background: rgb(252, 135, 135);
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.books {
+  background: rgb(116, 128, 235);
+}
+
+.shows {
+  background: rgb(167, 248, 129);
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
