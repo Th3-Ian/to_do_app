@@ -26,7 +26,7 @@ const listNav = () => {
 	(function() {
 		for(let i = 0; i < btnArray.length; i++) {
 			var li = document.createElement('li');
-			li.innerHTML = btnArray[i];
+			li.innerHTML = `<a>${btnArray[i]}</a>`;
 			ul.appendChild(li);
 		}
 	})();
@@ -35,15 +35,32 @@ const listNav = () => {
 	navBar.appendChild(ul);
 }
 
-const addNavItems = (navArray, menu) => {
-	for(let i = 0; i < navArray.length; i++) {
-		var li = document.createElement('li');
-		li.innerHTML = navArray[i];
-		menu.appendChild(li);
-	}
+class ListItem {
+	constructor(title, desc, platform){
+		this.title = title;
+		this.desc = desc;
+		this.platform = platform;
+	};
+
 }
 
+// NEW ITEM Button
+const newItemBtn = document.getElementById('new-item');
+const closeBtn = document.getElementById('close-button');
+const popupForm = document.getElementById('modal');
+const overlayBG = document.getElementById('overlay');
+newItemBtn.addEventListener('click', newPopup);
+closeBtn.addEventListener('click', closeModal);
 
+function newPopup() {
+	popupForm.style.display = "block";
+	overlayBG.style.display = "block";
+}
+
+function closeModal() {
+	popupForm.style.display = "none";
+	overlayBG.style.display = "none";
+}
 
 leftColumn();
 listNav();

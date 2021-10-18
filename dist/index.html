@@ -14,7 +14,7 @@
             <img src="" alt="Bo@rd Logo" />
           </div>
           <div>
-            <button class="btn-slide slide-down">New Task</button>
+            <button class="btn-slide slide-down" id="new-item">New Task</button>
           </div>
         </header>
         <div class="main-container">
@@ -45,6 +45,85 @@
         </div>
       </div>
     </div>
+    <div id="modal" class="modal">
+      <div class="new-item">
+        <div class="modal-header">
+          <h3>New Item</h3>
+          <button id="close-button" class="close-button">&times;</button>
+        </div>
+        <form action="" method="get" class="form-example">
+          <div class="new-item">
+            <label for="title">Title: </label>
+            <input type="text" name="title" id="title" required />
+          </div>
+          <div class="form-example">
+            <label for="description">Description: </label>
+            <input type="text" name="description" id="description" required />
+          </div>
+          <div class="form-example">
+            <label for="due-date">Read/Watch By: </label>
+            <input type="date" name="due-date" id="due-date" required />
+          </div>
+          <p>Select a priority:</p>
+          <div>
+            <input
+              type="radio"
+              id="high"
+              name="priority"
+              value="high"
+              checked
+            />
+            <label for="high">High</label>
+          </div>
+
+          <div>
+            <input type="radio" id="low" name="priority" value="low" />
+            <label for="low">Low</label>
+          </div>
+
+          <div>
+            <input type="radio" id="none" name="priority" value="none" />
+            <label for="none">None</label>
+          </div>
+
+          <p>Select List:</p>
+          <div>
+            <input
+              type="radio"
+              id="movies"
+              name="list-type"
+              value="movies"
+              checked
+            />
+            <label for="movies">Movies</label>
+          </div>
+
+          <div>
+            <input type="radio" id="books" name="list-type" value="books" />
+            <label for="books">Books</label>
+          </div>
+
+          <div>
+            <input type="radio" id="shows" name="list-type" value="shows" />
+            <label for="shows">Shows</label>
+          </div>
+          <div>
+            <input type="radio" id="anime" name="list-type" value="anime" />
+            <label for="anime">Anime</label>
+          </div>
+
+          <div>
+            <input type="radio" id="hobbies" name="list-type" value="hobbies" />
+            <label for="hobbies">Hobbies</label>
+          </div>
+
+          <div class="form-example">
+            <input type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
     <script src="bundle.js"></script>
   </body>
 </html>
