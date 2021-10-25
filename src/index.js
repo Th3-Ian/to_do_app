@@ -35,15 +35,6 @@ const listNav = () => {
 	navBar.appendChild(ul);
 }
 
-class ListItem {
-	constructor(title, desc, platform){
-		this.title = title;
-		this.desc = desc;
-		this.platform = platform;
-	};
-
-}
-
 // NEW ITEM Button
 const newItemBtn = document.getElementById('new-item');
 const closeBtn = document.getElementById('close-button');
@@ -61,6 +52,55 @@ function closeModal() {
 	popupForm.style.display = "none";
 	overlayBG.style.display = "none";
 }
+
+// ITEM OBJECT CONSTRUCTOR
+var itemsList = ['1frst obj'];
+
+
+class Item {
+	constructor(title, date, description, priority, list){
+		this.title = title
+		this.date = date
+		this.description = description
+		this.priority = priority
+		this.list = list
+		//this.addList(this);
+		return this;
+	}
+	addList() {
+		this.addedMessage();
+		return itemsList.push(this);
+	}
+	addedMessage() {
+		console.warn('added', this);
+		//this.saveList();
+	}
+	saveList() {
+		localStorage.setItem('MyLists', JSON.stringify(itemsList));
+	}
+};
+
+var form = document.querySelector('form');
+form.onsubmit = function(){
+	console.log('form on Click is WORKING');
+	var title = document.getElementById('title').value
+	var date = document.getElementById('due-date').value
+	var description = document.getElementById('description').value
+	var priority = document.querySelector('input[name="priority"]:checked')
+	var list = document.querySelector('input[name="list-type"]:checked')
+
+	let newItem = new Item(title, date, description, priority, list);
+	itemsList.push(newItem);
+	displayList();
+	//document.querySelector('form').reset();
+}
+
+function displayList(){
+	itemsList.forEach(item => console.log(item));
+}
+
+const randomBtn = document.getElementById('rndm-btn');
+randomBtn.addEventListener('click', displayList);
 
 leftColumn();
 listNav();
