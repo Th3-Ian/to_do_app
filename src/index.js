@@ -54,7 +54,7 @@ function closeModal() {
 }
 
 // ITEM OBJECT CONSTRUCTOR
-var itemsList = ['1frst obj'];
+var itemsList = [];
 
 
 class Item {
@@ -64,16 +64,13 @@ class Item {
 		this.description = description
 		this.priority = priority
 		this.list = list
-		//this.addList(this);
-		return this;
+		this.addList();
 	}
 	addList() {
-		this.addedMessage();
-		return itemsList.push(this);
-	}
-	addedMessage() {
-		console.warn('added', this);
-		//this.saveList();
+		//this.addedMessage();
+		itemsList.push(this);
+		//saveList();
+		alert(itemsList);
 	}
 	saveList() {
 		localStorage.setItem('MyLists', JSON.stringify(itemsList));
@@ -81,8 +78,8 @@ class Item {
 };
 
 var form = document.querySelector('form');
-form.onsubmit = function(){
-	console.log('form on Click is WORKING');
+form.onsubmit = function(e){
+	e.preventDefault();
 	var title = document.getElementById('title').value
 	var date = document.getElementById('due-date').value
 	var description = document.getElementById('description').value
@@ -90,12 +87,12 @@ form.onsubmit = function(){
 	var list = document.querySelector('input[name="list-type"]:checked')
 
 	let newItem = new Item(title, date, description, priority, list);
-	itemsList.push(newItem);
-	displayList();
 	//document.querySelector('form').reset();
+	closeModal();
+	form.reset();
 }
 
-function displayList(){
+function displayList() {
 	itemsList.forEach(item => console.log(item));
 }
 
