@@ -56,7 +56,6 @@ function closeModal() {
 // ITEM OBJECT CONSTRUCTOR
 var itemsList = [];
 
-
 class Item {
 	constructor(title, date, description, priority, list){
 		this.title = title
@@ -69,7 +68,7 @@ class Item {
 	addList() {
 		//this.addedMessage();
 		itemsList.push(this);
-		//saveList();
+		UI.displayItems
 		alert(itemsList);
 	}
 	saveList() {
@@ -83,8 +82,8 @@ form.onsubmit = function(e){
 	var title = document.getElementById('title').value
 	var date = document.getElementById('due-date').value
 	var description = document.getElementById('description').value
-	var priority = document.querySelector('input[name="priority"]:checked')
-	var list = document.querySelector('input[name="list-type"]:checked')
+	var priority = document.querySelector('input[name="priority"]:checked').value
+	var list = document.querySelector('input[name="list-type"]:checked').value
 
 	let newItem = new Item(title, date, description, priority, list);
 	//document.querySelector('form').reset();
@@ -98,6 +97,65 @@ function displayList() {
 
 const randomBtn = document.getElementById('rndm-btn');
 randomBtn.addEventListener('click', displayList);
+
+// OBJECT DISPLAY
+
+class UI {
+	static displayItems() {
+		const StoredItems = [
+			{
+				title: 'The Travels',
+				description: 'Details the adventures of Marco Polo',
+				priority: 'none',
+				list: 'Books',
+				date: '01/13/22',
+			},
+			{
+				title: 'The River of Doubt',
+				description: 'Details Theodore Roosevelts darkest journey by Candice Millard',
+				priority: 'Low',
+				list: 'Books',
+				date: '01/13/22'
+			},
+			{
+				title: 'Fire Force',
+				description: 'Fire fighting anime show',
+				priority: 'Low',
+				list: 'Shows',
+				date: '01/13/22',
+			}
+		]
+		const items = StoredItems;
+
+		items.forEach((item) => UI.addToList(item));
+	}
+
+	static addToList(item) {
+		const mainList = document.querySelector('.main-list');
+		const li = document.createElement('li');
+		const itemBtnComplete = document.createElement('button');
+		itemBtnComplete.classList.add('list-btn');
+		itemBtnComplete.innerHTML = 'O';
+
+		const itemBtnUpdate = document.createElement('button');
+		itemBtnUpdate.classList.add('list-btn');
+		itemBtnUpdate.innerHTML = '•••';
+
+
+		li.innerHTML =
+			`<button class="list-btn">O</button>
+			<span>${item.title}</span>
+			<span>${item.priority}</span>
+			<span>${item.list}</span>
+			<span>${item.date}</span>
+			<button class="list-btn">•••</button>`
+		;
+
+		mainList.appendChild(li);
+	}
+}
+
+document.addEventListener('DOMContentLoaded', UI.displayItems);
 
 leftColumn();
 listNav();

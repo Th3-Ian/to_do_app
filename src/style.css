@@ -89,7 +89,7 @@ h2 {
 
 .main-list li {
   display: grid;
-  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-columns: 1fr 3fr 2fr 1fr 1fr 1fr;
   border-bottom: 0.5px solid gray;
   padding: 5px;
 }
