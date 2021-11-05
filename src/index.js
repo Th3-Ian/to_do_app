@@ -144,7 +144,7 @@ class UI {
 
 		li.innerHTML =`
 			<button id="complete-btn" class="complete list-btn">O</button>
-			<span>${item.title}</span>
+			<span id='item-title'>${item.title}</span>
 			<span>${item.priority}</span>
 			<span>${item.list}</span>
 			<span>${item.date}</span>
@@ -154,9 +154,16 @@ class UI {
 		mainList.appendChild(li);
 	}
 
-	static completeItem(item) {
-		if(item.classList.contains('complete')) {
-			let row = item.parentElement
+	static completeItem(element) {
+		if(element.classList.contains('complete')) {
+			let row = element.parentElement
+			let obj = row.querySelector('#item-title').textContent;
+			itemsList.forEach(function (arrayObj, ind) {
+				if(arrayObj.title === obj){
+					console.log(`Hello ${obj} is working`);
+					itemsList.splice(ind);
+				}
+			})
 			row.remove();
 		}
 	}
@@ -168,7 +175,6 @@ leftColumn();
 listNav();
 
 document.querySelector('#main-list').addEventListener('click', (e) => {
-	console.log('btn is working');
 	UI.completeItem(e.target);
 })
 
