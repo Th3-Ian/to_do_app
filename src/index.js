@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import './style.css';
 
 const leftColumn = () => {
@@ -68,8 +67,7 @@ class Item {
 	addList() {
 		//this.addedMessage();
 		itemsList.push(this);
-		UI.displayItems
-		alert(itemsList);
+		UI.addToList(this);
 	}
 	saveList() {
 		localStorage.setItem('MyLists', JSON.stringify(itemsList));
@@ -134,28 +132,43 @@ class UI {
 		const mainList = document.querySelector('.main-list');
 		const li = document.createElement('li');
 		const itemBtnComplete = document.createElement('button');
-		itemBtnComplete.classList.add('list-btn');
+		itemBtnComplete.classList.add('complete', 'list-btn');
+		itemBtnComplete.setAttribute('id', 'complete');
 		itemBtnComplete.innerHTML = 'O';
 
 		const itemBtnUpdate = document.createElement('button');
-		itemBtnUpdate.classList.add('list-btn');
+		itemBtnUpdate.classList.add('update', 'list-btn');
+		itemBtnUpdate.setAttribute('id', 'update');
 		itemBtnUpdate.innerHTML = '•••';
 
 
-		li.innerHTML =
-			`<button class="list-btn">O</button>
+		li.innerHTML =`
+			<button id="complete-btn" class="complete list-btn">O</button>
 			<span>${item.title}</span>
 			<span>${item.priority}</span>
 			<span>${item.list}</span>
 			<span>${item.date}</span>
-			<button class="list-btn">•••</button>`
+			<button id="update-btn" class="update list-btn">•••</button>`
 		;
-
+		//li.appendChild(itemBtnComplete);
 		mainList.appendChild(li);
 	}
-}
 
+	static completeItem(item) {
+		if(item.classList.contains('complete')) {
+			let row = item.parentElement
+			row.remove();
+		}
+	}
+}
 document.addEventListener('DOMContentLoaded', UI.displayItems);
+
 
 leftColumn();
 listNav();
+
+document.querySelector('#main-list').addEventListener('click', (e) => {
+	console.log('btn is working');
+	UI.completeItem(e.target);
+})
+
