@@ -17,14 +17,16 @@ const leftColumn = () => {
 
 };
 
+var btnArray = ['Movies', 'Books', 'Shows', 'Hobbies']
+
 const listNav = () => {
-	const btnArray = ['Movies', 'Books', 'Shows', 'Anime', 'Hobbies'];
 	const navBar = document.getElementById('nav');
 	const ul = document.createElement('ul');
 
 	(function() {
 		for(let i = 0; i < btnArray.length; i++) {
 			var li = document.createElement('li');
+			li.setAttribute('id',`${btnArray[i]}-tab`);
 			li.innerHTML = `<a>${btnArray[i]}</a>`;
 			ul.appendChild(li);
 		}
@@ -33,6 +35,8 @@ const listNav = () => {
 	console.log(ul)
 	navBar.appendChild(ul);
 }
+
+
 
 // NEW ITEM Button
 const newItemBtn = document.getElementById('new-item');
@@ -93,9 +97,6 @@ function displayList() {
 	itemsList.forEach(item => console.log(item));
 }
 
-const randomBtn = document.getElementById('rndm-btn');
-randomBtn.addEventListener('click', displayList);
-
 // OBJECT DISPLAY
 
 class UI {
@@ -131,6 +132,7 @@ class UI {
 	static addToList(item) {
 		const mainList = document.querySelector('.main-list');
 		const li = document.createElement('li');
+		li.setAttribute('class','main-list-item');
 		const itemBtnComplete = document.createElement('button');
 		itemBtnComplete.classList.add('complete', 'list-btn');
 		itemBtnComplete.setAttribute('id', 'complete');
@@ -160,12 +162,21 @@ class UI {
 			let obj = row.querySelector('#item-title').textContent;
 			itemsList.forEach(function (arrayObj, ind) {
 				if(arrayObj.title === obj){
-					console.log(`Hello ${obj} is working`);
 					itemsList.splice(ind);
 				}
 			})
 			row.remove();
 		}
+	}
+
+	static clearList(){
+		const mainList = document.querySelector('.main-list');
+		mainList.querySelectorAll('.main-list-item').forEach((elem) => elem.remove());;
+	}
+
+	//this is the filter function for tab switching.
+	static addSublists(obj){
+
 	}
 }
 document.addEventListener('DOMContentLoaded', UI.displayItems);
@@ -178,3 +189,10 @@ document.querySelector('#main-list').addEventListener('click', (e) => {
 	UI.completeItem(e.target);
 })
 
+const randomBtn = document.getElementById('rndm-btn');
+randomBtn.addEventListener('click', UI.clearList);
+
+document.querySelector('#nav').addEventListener('click', (e) => {
+	//this will call the change tab function
+	console.log(`Hello this click is working ${e.target}`);
+})
