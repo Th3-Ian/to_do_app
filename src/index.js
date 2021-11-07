@@ -22,12 +22,13 @@ var btnArray = ['Movies', 'Books', 'Shows', 'Hobbies']
 const listNav = () => {
 	const navBar = document.getElementById('nav');
 	const ul = document.createElement('ul');
+	ul.setAttribute('id','nav-ul');
 
 	(function() {
 		for(let i = 0; i < btnArray.length; i++) {
 			var li = document.createElement('li');
-			li.setAttribute('id',`${btnArray[i]}-tab`);
-			li.innerHTML = `<a>${btnArray[i]}</a>`;
+			li.setAttribute('id',`${btnArray[i]}`);
+			li.innerHTML = `${btnArray[i]}`;
 			ul.appendChild(li);
 		}
 	})();
@@ -35,7 +36,6 @@ const listNav = () => {
 	console.log(ul)
 	navBar.appendChild(ul);
 }
-
 
 
 // NEW ITEM Button
@@ -175,8 +175,18 @@ class UI {
 	}
 
 	//this is the filter function for tab switching.
-	static addSublists(obj){
+	static changeList(subList){
+		UI.clearList()
+		subList.forEach((item) => UI.addToList(item));
+	}
 
+	static addSublists(obj){
+		var subList = itemsList.filter((item) => UI.capitalize(item.list) === obj);
+		UI.changeList(subList);
+	}
+
+	static capitalize(string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }
 document.addEventListener('DOMContentLoaded', UI.displayItems);
@@ -194,5 +204,5 @@ randomBtn.addEventListener('click', UI.clearList);
 
 document.querySelector('#nav').addEventListener('click', (e) => {
 	//this will call the change tab function
-	console.log(`Hello this click is working ${e.target}`);
+	UI.addSublists(e.target.id);
 })
