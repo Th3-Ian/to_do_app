@@ -207,18 +207,39 @@ class UI {
 			alert('Please enter a value');
 		} else {
 			btnArray.push(newList);
-			UI.updateNav()
+			UI.updateNav(newList)
+
 		}
 	}
 
-	static updateNav() {
+	static updateNav(newList) {
 		UI.clearNav()
 		listNav()
+		UI.updateFormList(newList)
 	}
 
 	static clearNav() {
 		const mainNav = document.querySelector('.list-nav');
 		mainNav.querySelector('#nav-ul').remove();
+	}
+
+	static updateFormList(listName) {
+		const btnContainer = document.querySelector('.new-item-list-container');
+		const div = document.createElement('div');
+		const input = document.createElement('input');
+		const label = document.createElement('label');
+
+		input.type = 'radio';
+		input.setAttribute('id', `${listName}`);
+		input.setAttribute('name', `list-type`);
+		input.setAttribute('value', `${listName}`);
+		label.setAttribute('for', `${listName}`);
+		label.innerHTML = `${listName}`;
+
+		div.appendChild(input);
+		div.appendChild(label);
+
+		btnContainer.appendChild(div);
 	}
 }
 document.addEventListener('DOMContentLoaded', UI.displayItems);
