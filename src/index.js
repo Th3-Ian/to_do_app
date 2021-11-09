@@ -199,6 +199,27 @@ class UI {
 	static capitalize(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
+
+	static addList() {
+		let newList = document.querySelector('#add-list').value
+		let listLength = newList.trim().length;
+		if(listLength == 0){
+			alert('Please enter a value');
+		} else {
+			btnArray.push(newList);
+			UI.updateNav()
+		}
+	}
+
+	static updateNav() {
+		UI.clearNav()
+		listNav()
+	}
+
+	static clearNav() {
+		const mainNav = document.querySelector('.list-nav');
+		mainNav.querySelector('#nav-ul').remove();
+	}
 }
 document.addEventListener('DOMContentLoaded', UI.displayItems);
 
@@ -208,6 +229,10 @@ listNav();
 
 document.querySelector('#main-list').addEventListener('click', (e) => {
 	UI.completeItem(e.target);
+})
+
+document.querySelector('#new-list-btn').addEventListener('click', () => {
+	UI.addList();
 })
 
 const randomBtn = document.getElementById('rndm-btn');
