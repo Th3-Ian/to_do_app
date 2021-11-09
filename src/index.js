@@ -17,7 +17,7 @@ const leftColumn = () => {
 
 };
 
-var btnArray = ['Movies', 'Books', 'Shows', 'Hobbies']
+var btnArray = ['All', 'Movies', 'Books', 'Shows', 'Hobbies']
 
 const listNav = () => {
 	const navBar = document.getElementById('nav');
@@ -124,9 +124,13 @@ class UI {
 				date: '01/13/22',
 			}
 		]
+
+
 		const items = StoredItems;
 
+		items.forEach((item) => itemsList.push(item));
 		items.forEach((item) => UI.addToList(item));
+		console.log(itemsList);
 	}
 
 	static addToList(item) {
@@ -178,11 +182,18 @@ class UI {
 	static changeList(subList){
 		UI.clearList()
 		subList.forEach((item) => UI.addToList(item));
+
 	}
 
 	static addSublists(obj){
-		var subList = itemsList.filter((item) => UI.capitalize(item.list) === obj);
-		UI.changeList(subList);
+		console.log(obj)
+		if(obj === 'All'){
+			UI.clearList()
+			itemsList.forEach((item) => UI.addToList(item));
+		} else {
+			var subList = itemsList.filter((item) => UI.capitalize(item.list) === obj);
+			UI.changeList(subList);
+		}
 	}
 
 	static capitalize(string) {
