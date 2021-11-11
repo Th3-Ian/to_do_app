@@ -18,6 +18,7 @@ const leftColumn = () => {
 };
 
 var btnArray = ['All', 'Movies', 'Books', 'Shows', 'Hobbies']
+var selectedRow = null
 
 const listNav = () => {
 	const navBar = document.getElementById('nav');
@@ -81,16 +82,32 @@ class Item {
 var form = document.querySelector('form');
 form.onsubmit = function(e){
 	e.preventDefault();
-	var title = document.getElementById('title').value
-	var date = document.getElementById('due-date').value
-	var description = document.getElementById('description').value
-	var priority = document.querySelector('input[name="priority"]:checked').value
-	var list = document.querySelector('input[name="list-type"]:checked').value
+	if(selectedRow == null){
+		var title = document.getElementById('title').value
+		var date = document.getElementById('due-date').value
+		var description = document.getElementById('description').value
+		var priority = document.querySelector('input[name="priority"]:checked').value
+		var list = document.querySelector('input[name="list-type"]:checked').value
 
-	let newItem = new Item(title, date, description, priority, list);
+		let newItem = new Item(title, date, description, priority, list);
+	} else {
+		let obj = selectedRow.querySelector('#item-title').textContent;
+			itemsList.forEach(function (arrayObj, ind) {
+				if(arrayObj.title === obj){
+					arrayObj.title = document.getElementById('title').value
+					arrayObj.date = document.getElementById('due-date').value
+					arrayObj.description = document.getElementById('description').value
+					arrayObj.priority = document.querySelector('input[name="priority"]:checked').value
+					arrayObj.list = document.querySelector('input[name="list-type"]:checked').value
+					UI.addSublists('All');
+				}
+			})
+	}
+
 	//document.querySelector('form').reset();
 	closeModal();
 	form.reset();
+	selectedRow = null;
 }
 
 function displayList() {
@@ -149,14 +166,15 @@ class UI {
 		itemBtnUpdate.classList.add('update', 'list-btn');
 		itemBtnUpdate.setAttribute('id', 'update');
 		itemBtnUpdate.innerHTML = '•••';
-
+		var listName = UI.capitalize(item.list);
+		var listPriority = UI.capitalize(item.priority);
 
 		li.innerHTML =`
 			<button id="complete-btn" class="complete list-btn">O</button>
 			<span id='item-title' class="item-title">${item.title}</span>
-			<span>${item.priority}</span>
-			<span>${item.list}</span>
-			<span>${item.date}</span>
+			<span id='item-priority' >${listPriority}</span>
+			<span id='item-list' >${listName}</span>
+			<span id='item-date' >${item.date}</span>
 			<button id="update-btn" class="update list-btn">•••</button>`
 		;
 		//li.appendChild(itemBtnComplete);
@@ -180,7 +198,11 @@ class UI {
 
 	static updateItem(element) {
 		if(element.classList.contains('update')) {
-			console.log('update button is working')
+			selectedRow = element.parentElement
+			document.querySelector('#title').value = selectedRow.querySelector('#item-title').innerHTML
+			document.querySelector('#description').value = selectedRow.querySelector('.details').innerHTML
+			document.querySelector('#due-date').value = selectedRow.querySelector('#item-date').innerHTML
+			newPopup()
 		}
 	}
 
