@@ -137,10 +137,13 @@ class UI {
 		const mainList = document.querySelector('.main-list');
 		const li = document.createElement('li');
 		li.setAttribute('class','main-list-item');
+		const div = document.createElement('div');
 		const itemBtnComplete = document.createElement('button');
 		itemBtnComplete.classList.add('complete', 'list-btn');
 		itemBtnComplete.setAttribute('id', 'complete');
 		itemBtnComplete.innerHTML = 'O';
+		div.classList.add("hidden", "details");
+		div.innerHTML = `${item.description}`
 
 		const itemBtnUpdate = document.createElement('button');
 		itemBtnUpdate.classList.add('update', 'list-btn');
@@ -150,14 +153,16 @@ class UI {
 
 		li.innerHTML =`
 			<button id="complete-btn" class="complete list-btn">O</button>
-			<span id='item-title'>${item.title}</span>
+			<span id='item-title' class="item-title">${item.title}</span>
 			<span>${item.priority}</span>
 			<span>${item.list}</span>
 			<span>${item.date}</span>
 			<button id="update-btn" class="update list-btn">•••</button>`
 		;
 		//li.appendChild(itemBtnComplete);
+		li.appendChild(div);
 		mainList.appendChild(li);
+
 	}
 
 	static completeItem(element) {
@@ -170,6 +175,12 @@ class UI {
 				}
 			})
 			row.remove();
+		}
+	}
+
+	static updateItem(element) {
+		if(element.classList.contains('update')) {
+			console.log('update button is working')
 		}
 	}
 
@@ -241,6 +252,14 @@ class UI {
 
 		btnContainer.appendChild(div);
 	}
+
+	static displayDetails(element) {
+		if(element.classList.contains('item-title')) {
+			let row = element.parentElement
+			let details = row.querySelector('.details');
+			details.classList.toggle('hidden');
+		}
+	}
 }
 document.addEventListener('DOMContentLoaded', UI.displayItems);
 
@@ -250,6 +269,15 @@ listNav();
 
 document.querySelector('#main-list').addEventListener('click', (e) => {
 	UI.completeItem(e.target);
+})
+
+document.querySelector('#main-list').addEventListener('click', (e) => {
+	//update item
+	UI.updateItem(e.target);
+})
+
+document.querySelector('#main-list').addEventListener('click', (e) => {
+	UI.displayDetails(e.target);
 })
 
 document.querySelector('#new-list-btn').addEventListener('click', () => {
