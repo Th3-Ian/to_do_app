@@ -73,9 +73,7 @@ class Item {
 		//this.addedMessage();
 		itemsList.push(this);
 		UI.addToList(this);
-	}
-	saveList() {
-		localStorage.setItem('MyLists', JSON.stringify(itemsList));
+		Store.addItem(this);
 	}
 };
 
@@ -118,7 +116,9 @@ function displayList() {
 
 class UI {
 	static displayItems() {
-		const StoredItems = [
+		const StoredItems = Store.getList();
+		/*
+		[
 			{
 				title: 'The Travels',
 				description: 'Details the adventures of Marco Polo',
@@ -141,13 +141,12 @@ class UI {
 				date: '01/13/22',
 			}
 		]
-
+		*/
 
 		const items = StoredItems;
 
 		items.forEach((item) => itemsList.push(item));
 		items.forEach((item) => UI.addToList(item));
-		console.log(itemsList);
 	}
 
 	static addToList(item) {
@@ -190,6 +189,7 @@ class UI {
 			itemsList.forEach(function (arrayObj, ind) {
 				if(arrayObj.title === obj){
 					itemsList.splice(ind);
+					Store.removeItem(obj);
 				}
 			})
 			row.remove();
@@ -283,6 +283,40 @@ class UI {
 		}
 	}
 }
+
+class Store {
+	static getList() {
+		let myList
+		if(localStorage.getItem('myList') === null) {
+			myList = [];
+		} else {
+			myList = JSON.parse(localStorage.getItem('myList'));
+		}
+		return myList;
+	}
+
+	static addItem(todo) {
+		const myList = Store.getList();
+
+		myList.push(todo);
+		console.log('Storage add item is persisting');
+		console.table(myList);
+		localStorage.setItem('myList', JSON.stringify(myList));
+	}
+
+	static removeItem(todo) {
+		const myList = Store.getList();
+		myList.forEach((listItem, ind) => {
+			if(listItem.title === todo){
+				myList.splice(ind, 1);
+			}
+		});
+
+		localStorage.setItem('myList', JSON.stringify(myList));
+	}
+}
+
+//EVENTS
 document.addEventListener('DOMContentLoaded', UI.displayItems);
 
 
@@ -307,7 +341,7 @@ document.querySelector('#new-list-btn').addEventListener('click', () => {
 })
 
 const randomBtn = document.getElementById('rndm-btn');
-randomBtn.addEventListener('click', UI.clearList);
+randomBtn.addEventListener('click', displayList);
 
 document.querySelector('#nav').addEventListener('click', (e) => {
 	//this will call the change tab function
